@@ -46,7 +46,6 @@ const DailyPlanner = () => {
 
     // Trigger new empty row for editing
     const addNewRow = () => {
-        //setNewTask({ taskName: '', allottedTime: '', priority: '', status: '' });
         setIsEditing(true);
     };
 

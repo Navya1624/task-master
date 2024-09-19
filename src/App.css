@@ -71,7 +71,7 @@ nav {
     }
 }
 
-/* Home Container Styles
+/* Home Container Style
     .home-container {
     display: flex;
     justify-content: center;
@@ -79,22 +79,3 @@ nav {
     height: 100vh;
     background-color: #f4f4f4;
     } */
-/* .titleSection{
-    color: white;
-    
-    display:inline-flex;
-    font-size: 30px;
-}
-  .navSection{
-    border: 1px solid red;
-    background-color: black;
-    display: flex;
-    justify-content: space-evenly;
-    color: white;
-  }  
-
-  .navSection ul li{
-    display: inline-flex;
-    list-style: none;
-    margin: 20px;
-  } */

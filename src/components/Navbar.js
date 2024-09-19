@@ -1,9 +1,9 @@
-import React, { useState } from 'react'
+import React from 'react'
 import '../App.css'
 import { Link } from 'react-router-dom'
 
 const Navbar = () => {
-    
+
     return (
         <nav>
             <div className='nav-logo-container'></div>
@@ -11,7 +11,7 @@ const Navbar = () => {
                 TaskMaster
             </div>
             <div className='navbar-links-container'>
-                <Link to= "/">Daily Planner</Link>
+                <Link to="/">Daily Planner</Link>
                 <Link to="">Domains</Link>
                 <Link to="">Remainders</Link>
                 <Link to="">Timers</Link>

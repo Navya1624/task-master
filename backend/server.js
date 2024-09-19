@@ -23,7 +23,7 @@ const TaskSchema = new mongoose.Schema({
     status: String
 });
 
-const Task = mongoose.model('Task', TaskSchema);
+const Task = mongoose.model('Tasks', TaskSchema);
 
 // API routes
 app.get('/tasks', async (req, res) => {
@@ -35,6 +35,26 @@ app.post('/tasks', async (req, res) => {
     const newTask = new Task(req.body);
     await newTask.save();
     res.json(newTask);
+});
+
+// Update a task by ID
+app.put('/tasks/:id', async (req, res) => {
+    try {
+        const task = await Task.findByIdAndUpdate(req.params.id, req.body, { new: true });
+        res.json(task);
+    } catch (err) {
+        res.status(500).send('Error updating task');
+    }
+});
+
+app.delete('/task/:id',async(req,res)=> {
+    const {id}=req.params;
+    try {
+        await Task.findByIdAndDelete(id);
+        res.json({ message: 'Task deleted' });
+    } catch (err) {
+        res.status(500).send('Error deleting task');
+    }
 });
 
 app.listen(PORT, () => {

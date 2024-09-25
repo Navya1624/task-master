@@ -6,7 +6,7 @@ const DailyPlanner = () => {
     const [tasks, setTasks] = useState([]);
     const [isEditing, setIsEditing] = useState(false); // Track if a new row is being edited
     const [newTask, setNewTask] = useState({ taskName: '', allottedTime: '', priority: '', status: '' });
-    const [currentTaskId, setCurrentTaskId] = useState(null);
+
 
     useEffect(() => {
         const fetchTasks = async () => {
@@ -28,20 +28,10 @@ const DailyPlanner = () => {
 
 
     const saveTask = async () => {
-        try {
-            if (isEditing) {
-                const response = await axios.put(`http://localhost:5000/tasks/${currentTaskId}`, newTask);
-                setTasks(tasks.map((task) => (task._id === currentTaskId ? response.data : task)));
-            } else {
-                const response = await axios.post('http://localhost:5000/tasks', newTask);
-                setTasks([...tasks, response.data]);
-            }
-            setNewTask({ taskName: '', allottedTime: '', priority: '', status: '' });
-            setIsEditing(false);
-            setCurrentTaskId(null);
-        } catch (error) {
-            console.error('Error saving task:', error);
-        }
+        const response = await axios.post('http://localhost:5000/tasks', newTask);
+        setTasks([...tasks, response.data]);
+        setNewTask({ taskName: '', allottedTime: '', priority: '', status: '' });
+        setIsEditing(false);
     };
 
     // Trigger new empty row for editing
@@ -51,21 +41,15 @@ const DailyPlanner = () => {
 
     const deleteTask = async (id) => {
         try {
+            console.log(id);
             await axios.delete(`http://localhost:5000/tasks/${id}`);
-            setTasks(tasks.filter((task) => task._id !== id));
+            setTasks(tasks.filter(task => task._id !== id));
         }
         catch (error) {
-            console.error('Error at deleting task: ', error);
+            console.error('Error deleting task:', error);
         }
     };
 
-
-    const startEditTask = (task) => {
-        //setNewTask(task);
-        //setIsEditing(true);
-        //setCurrentTaskId(task._id);
-    };
-    
     return (
         <div>
             <TableContainer>
@@ -80,17 +64,15 @@ const DailyPlanner = () => {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {tasks.map((task, index) => (
-                            <TableRow key={index}>
+                        {tasks.map((task) => (
+                            <TableRow key={task._id}>
                                 <TableCell>{task.taskName}</TableCell>
                                 <TableCell>{task.allottedTime}</TableCell>
                                 <TableCell>{task.priority}</TableCell>
                                 <TableCell>{task.status}</TableCell>
                                 <TableCell>
-                                    <Button variant="contained" color="info" onClick={() => startEditTask(task._id)}>
-                                        Edit
-                                    </Button>
-                                    <Button variant="contained" color="error" onClick={() => deleteTask(task._id)}>
+                                    
+                                    <Button variant='contained' color='error' onClick={()=> deleteTask(task._id)}>
                                         Delete
                                     </Button>
                                 </TableCell>
@@ -145,8 +127,11 @@ const DailyPlanner = () => {
                                 </TableCell>
                                 <TableCell>
                                     <Button variant="contained" onClick={saveTask}>
-                                        Save
+                                       Save
                                     </Button>
+                                </TableCell>
+                                <TableCell>
+
                                 </TableCell>
                             </TableRow>
                         )}

@@ -49,6 +49,7 @@ app.put('/tasks/:id', async (req, res) => {
 
 app.delete('/task/:id',async(req,res)=> {
     const {id}=req.params;
+    console.log(id);
     try {
         await Task.findByIdAndDelete(id);
         res.json({ message: 'Task deleted' });

@@ -1,7 +1,7 @@
 import './App.css';
 import Home from './pages/Home';
 import { Routes, Route } from 'react-router-dom';
-import axios from 'axios';
+import Authentication from './components/Authentication';
 
 function App() {
   return (
@@ -10,6 +10,7 @@ function App() {
       <Routes>
         <Route path='/' element={<Home />} />
         <Route path='/abc' element={<Home />} />
+        <Route path='/auth' element={<Authentication />} />
       </Routes>
     </div>
   );

@@ -1,6 +1,6 @@
-import React from 'react'
-import '../App.css'
-import { Link } from 'react-router-dom'
+import React from 'react';
+import '../App.css';
+import { Link } from 'react-router-dom';
 
 const Navbar = () => {
 
@@ -15,7 +15,7 @@ const Navbar = () => {
                 <Link to="">Domains</Link>
                 <Link to="">Remainders</Link>
                 <Link to="">Timers</Link>
-                <button className='primary-button'>Profile</button>
+                <Link to="auth" className='primary-button'>Profile</Link>
             </div>
         </nav>
     )

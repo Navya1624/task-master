@@ -2,7 +2,8 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const bodyParser = require('body-parser');
-import authenticationRoutes from './authentication';
+import authenticationRoutes from './Routes/Authentication'
+
 
 const app = express();
 const PORT = process.env.PORT || 5000;

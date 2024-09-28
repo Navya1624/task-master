@@ -1,81 +1,81 @@
 /* Global styles*/
 body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    background-color: white;
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background-color: white;
 }
 
 /* Navbar Styles */
 nav {
-    display: flex;
-    justify-content: space-evenly;
-    align-items: center;
-    padding: 16px 30px;
-    background-color: black;
-    /* Random dark blue color */
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  padding: 16px 30px;
+  background-color: black;
+  /* Random dark blue color */
 }
 
 .navbar-title-container {
-    font-size: 30px;
-    font-style: oblique;
-    color: #ffffff;
-    flex-grow: 1;
-    /* Allows the title to take available space */
-    text-align: center;
-    /* Center the text horizontally */
+  font-size: 30px;
+  font-style: oblique;
+  color: #ffffff;
+  flex-grow: 1;
+  /* Allows the title to take available space */
+  text-align: center;
+  /* Center the text horizontally */
 }
 
 .navbar-links-container a {
-    color: #ffffff;
-    text-decoration: none;
-    font-size: 18px;
-    margin-right: 20px;
-    transition: color 0.3s ease;
+  color: #ffffff;
+  text-decoration: none;
+  font-size: 18px;
+  margin-right: 20px;
+  transition: color 0.3s ease;
 }
 
 .navbar-links-container a:hover {
-    color: #0d9383;
-    /* Highlight color on hover */
+  color: #0d9383;
+  /* Highlight color on hover */
 }
 
 .navbar-links-container {
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
 }
 
 
 .primary-button {
-    background-color:#0d9383;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 18px;
-    transition: background-color 0.3s ease;
+  background-color:#0d9383;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 18px;
+  transition: background-color 0.3s ease;
 }
 
 .primary-button:hover {
-    background-color: #B2E6CE;
-    /* Darker hover color */
+  background-color: #B2E6CE;
+  /* Darker hover color */
 }
 
 
 @media only screen and (max-width: 768px) {
-    .navbar-links-container {
-        display: none;
-    }
+  .navbar-links-container {
+      display: none;
+  }
 
-    .navbar-menu-container {
-        display: block;
-    }
+  .navbar-menu-container {
+      display: block;
+  }
 }
 
 /* Home Container Style
-    .home-container {
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    height: 100vh;
-    background-color: #f4f4f4;
-    } */
+  .home-container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  height: 100vh;
+  background-color: #f4f4f4;
+  } */

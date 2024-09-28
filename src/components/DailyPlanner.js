@@ -65,7 +65,7 @@ const DailyPlanner = () => {
         //setIsEditing(true);
         //setCurrentTaskId(task._id);
     };
-    
+
     return (
         <div>
             <TableContainer>
@@ -168,3 +168,6 @@ const DailyPlanner = () => {
 };
 
 export default DailyPlanner;
+
+
+

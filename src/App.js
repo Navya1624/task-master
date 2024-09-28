@@ -1,18 +1,19 @@
 import './App.css';
-import Home from './pages/Home';
-import { Routes, Route } from 'react-router-dom';
-import Authentication from './components/Authentication';
+import Home from './pages/home/Home';
+import Signup from './pages/Signup';
+import { Routes, Route, BrowserRouter } from 'react-router-dom';
+
 
 function App() {
   return (
-    <div>
-
-      <Routes>
-        <Route path='/' element={<Home />} />
-        <Route path='/abc' element={<Home />} />
-        <Route path='/auth' element={<Authentication />} />
-      </Routes>
-    </div>
+    <BrowserRouter>
+      <div>
+        <Routes>
+          <Route path='/' element={<Home />} />
+          <Route path='/Signup' element={<Signup />} />
+        </Routes>
+      </div>
+    </BrowserRouter>
   );
 }
 

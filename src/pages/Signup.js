@@ -14,7 +14,6 @@ const Signup = () => {
                 email,
                 password,
             });
-            console.log("register hit");
             console.log(response.data);
         } catch (error) {
             console.error('Error during registration: ', error);

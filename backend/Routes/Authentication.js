@@ -11,18 +11,15 @@ router.use(express.json());
 
 
 router.post("/register", async (req, res) => {
-    console.log("register api hit");
     try {
         const { username, email, password } = req.body;
         if (!(username && email && password)) {
-            console.log("Request Body: ", req.body);
             res.status(400).send('All fields are mandatory');
         }
         const existingUser = await User.findOne({ email });
         if (existingUser) {
             return res.status(400).send('User already exists');
         }
-        console.log(existingUser);
         const hashedPassword = await bcrypt.hash(password, 10);
 
         const user = new User({

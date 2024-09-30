@@ -9,11 +9,12 @@ const Signup = () => {
 
     const Register = async () => {
         try {
-            const response = await axios.post(`http://localhost:5000/register`, {
+            const response = await axios.post(`http://localhost:5000/api/auth/register`, {
                 username,
                 email,
                 password,
             });
+            console.log("register hit");
             console.log(response.data);
         } catch (error) {
             console.error('Error during registration: ', error);

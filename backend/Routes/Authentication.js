@@ -1,32 +1,45 @@
-import { User } from '../db/db';
-const express = require('express');
-const bcrypt = require('bcryptjs');
-const cookieParser = require('cookie-parser');
-const jwt = require('jsonwebtoken');
-
-const app = express();
-app.use(cookieParser());
-app.use(express.json());
+import { User } from '../models/user.js';
+import express from 'express';
+import bcrypt from 'bcrypt';
+import cookieParser from 'cookie-parser';
+import jwt from 'jsonwebtoken';
 
 
-app.post("/register", async (req, res) => {
+const router = express.Router();
+router.use(cookieParser());
+router.use(express.json());
+
+
+router.post("/register", async (req, res) => {
+    console.log("register api hit");
     try {
         const { username, email, password } = req.body;
         if (!(username && email && password)) {
+            console.log("Request Body: ", req.body);
             res.status(400).send('All fields are mandatory');
         }
         const existingUser = await User.findOne({ email });
         if (existingUser) {
             return res.status(400).send('User already exists');
         }
-        const hashedPassword = await bcrypt.hash(password, 10)
-        const userDetails = await User.Create(username, email, hashedPassword);
+        console.log(existingUser);
+        const hashedPassword = await bcrypt.hash(password, 10);
 
-        const token = jwt.sign({ id: userDetails._id }, 'shhhh', {
+        const user = new User({
+            username,
+            email,
+            password: hashedPassword
+        });
+        
+        // Save the user to the database
+        await user.save();
+        console.log("User Created: ", user);
+
+        const token = jwt.sign({ id: user._id }, 'shhhh', {
             expiresIn: "2h"
         })
-        userDetails.token = token;
-        res.status(201).json(userDetails);
+        user.token = token;
+        res.status(201).json(user);
     }
     catch (error) {
         console.error(error); 
@@ -34,7 +47,7 @@ app.post("/register", async (req, res) => {
     }
 })
 
-app.post('login', async (req, res) => {
+router.post('/login', async (req, res) => {
     try {
         const { email, password } = req.body
         if (!(email && password)) {
@@ -71,4 +84,4 @@ app.post('login', async (req, res) => {
         res.status(500).send('Server error'); 
     }
 })
-export default AuthenticationRoutes;
+export default router;

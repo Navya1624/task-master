@@ -32,7 +32,7 @@ router.post("/register", async (req, res) => {
         await user.save();
         console.log("User Created: ", user);
 
-        const token = jwt.sign({ id: user._id }, 'shhhh', {
+        const token = jwt.sign({ id: user._id }, "your_jwt_secret", {
             expiresIn: "2h"
         })
         user.token = token;
@@ -47,16 +47,18 @@ router.post("/register", async (req, res) => {
 router.post('/login', async (req, res) => {
     try {
         const { email, password } = req.body
+        console.log(email,password);
         if (!(email && password)) {
             res.status(400).send('send all data');
         }
-        const userExists = await User.findOne("email");
+        const userExists = await User.findOne({email:email});
+        console.log(userExists);
         if (!userExists) {
             res.status(404).send('Create a account to login');
         }
-        if (userExists && await bcrypt.compare(password, User.password)) {
+        if (userExists && await bcrypt.compare(password, userExists.password)) {
             const token = jwt.sign(
-                { id: userExists._id }, 'shhhh', {
+                { id: userExists._id } ,"your_jwt_secret",{
                 expiresIn: "2h"
             }
             );
@@ -66,12 +68,11 @@ router.post('/login', async (req, res) => {
                 expires : new Date(Date.now()+ 3*24*60*60*1000),
                 httpOnly:true
             }
-            res.status(200).cookie("token",token,options).json({
+             res.status(200).cookie("token",token,options).json({
                 success: true,
                 token,
                 userExists
             })
-            res.status(201).json(userExists);
         }
         else{
             res.status(400).send('Invalid credentials');
@@ -81,4 +82,5 @@ router.post('/login', async (req, res) => {
         res.status(500).send('Server error'); 
     }
 })
+
 export default router;

@@ -30,6 +30,7 @@ const DailyPlanner = () => {
     const saveTask = async () => {
         try {
             if (isEditing) {
+                console.log(currentTaskId,"hello",newTask);
                 const response = await axios.put(`http://localhost:5000/tasks/${currentTaskId}`, newTask);
                 setTasks(tasks.map((task) => (task._id === currentTaskId ? response.data : task)));
             } else {

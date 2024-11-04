@@ -5,8 +5,10 @@ import { verifyToken } from '../middlewares/authentication.js';
 const router = express();
 
 router.get('/tasks', verifyToken, async (req, res) => {
+    console.log("work");
     try {
         const tasks = await Task.find({ userId: req.user._id });
+
         res.json(tasks);
     }
     catch (err) {

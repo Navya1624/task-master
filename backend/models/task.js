@@ -1,10 +1,8 @@
 import mongoose from 'mongoose'
 const TaskSchema = new mongoose.Schema({
     taskName: {
-        type: {
-            type: String,
-            required: true
-        }
+        type: String,
+        required: true
     },
     allottedTime: String,
     priority: String,

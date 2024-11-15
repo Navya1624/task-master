@@ -5,7 +5,6 @@ import { verifyToken } from '../middlewares/authentication.js';
 const router = express();
 
 router.get('/tasks', verifyToken, async (req, res) => {
-    console.log("work");
     try {
         const tasks = await Task.find({ userId: req.user._id });
 
@@ -16,8 +15,9 @@ router.get('/tasks', verifyToken, async (req, res) => {
     }
 });
 
-router.post('/tasks', verifyToken, async (req, res) => {
-    const newTask = new Task({ ...req.body, userId: req.user._id });
+router.post('/tasks', verifyToken,async (req, res) => {
+    console.log("post reached",req.body);
+    const newTask = new Task({ ...req.body, user: "66fb1a20f9d92138d5979872" });
     await newTask.save();
     res.json(newTask);
 });
@@ -32,11 +32,15 @@ router.put('/tasks/:id', verifyToken, async (req, res) => {
     }
 });
 
-router.delete('/task/:id', async (req, res) => {
+router.delete('/tasks/:id', async (req, res) => {
     try {
-        await Task.findOneAndDelete({ _id: req.params.id, userId: req.user._id });
+        const response = await Task.findOneAndDelete({_id: req.params.id});
+        if (!response) {
+            return res.status(404).json({ error: 'Task not found or unauthorized' });
+        }
         res.json({ message: 'Task deleted' });
     } catch (err) {
+        console.log("catch re")
         res.status(500).send('Error deleting task');
     }
 });

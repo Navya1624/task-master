@@ -30,7 +30,7 @@ const Login = () => {
     return (
         <div>
             <TextField
-                placeholder='Username'
+                placeholder='Email'
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
             />

@@ -6,12 +6,11 @@ const DailyPlanner = () => {
     const [tasks, setTasks] = useState([]);
     const [isEditing, setIsEditing] = useState(false); // Track if a new row is being edited
     const [newTask, setNewTask] = useState({ taskName: '', allottedTime: '', priority: '', status: '' });
-    const [currentTaskId, setCurrentTaskId] = useState(null);
 
     useEffect(() => {
         const fetchTasks = async () => {
             try {
-                const response = await axios.get('http://localhost:5000/tasks');
+                const response = await axios.get('http://localhost:5000/api/dailyplanner/tasks');
                 setTasks(response.data);
             } catch (error) {
                 console.error('Error fetching tasks:', error);
@@ -29,17 +28,14 @@ const DailyPlanner = () => {
 
     const saveTask = async () => {
         try {
-            if (isEditing) {
-                console.log(currentTaskId,"hello",newTask);
-                const response = await axios.put(`http://localhost:5000/tasks/${currentTaskId}`, newTask);
-                setTasks(tasks.map((task) => (task._id === currentTaskId ? response.data : task)));
-            } else {
-                const response = await axios.post('http://localhost:5000/tasks', newTask);
+            {
+                console.log(newTask);
+                const response = await axios.post('http://localhost:5000/api/dailyplanner/tasks', newTask);
                 setTasks([...tasks, response.data]);
             }
             setNewTask({ taskName: '', allottedTime: '', priority: '', status: '' });
             setIsEditing(false);
-            setCurrentTaskId(null);
+
         } catch (error) {
             console.error('Error saving task:', error);
         }
@@ -50,21 +46,24 @@ const DailyPlanner = () => {
         setIsEditing(true);
     };
 
-    const deleteTask = async (id) => {
+    const editTask = async(task_id) => {
+        setIsEditing(true);
         try {
-            await axios.delete(`http://localhost:5000/tasks/${id}`);
-            setTasks(tasks.filter((task) => task._id !== id));
+            const change = await handleInputChange();
+            saveTask(task_id);
+        }catch(error){
+            console.error('Error saving task:', error);
         }
-        catch (error) {
-            console.error('Error at deleting task: ', error);
+    }
+
+    const deleteTask = async( task_id) => {
+        try{
+            const response = await axios.delete(`http://localhost:5000/api/dailyplanner/tasks/${task_id}`);
+            //setTasks(tasks.filter((task) => task._id !== id));
+            console.log('Task deleted successfully:', response.data);
+        }catch(error){
+            console.error('Error while deleting the tasks',error);
         }
-    };
-
-
-    const startEditTask = (task) => {
-        //setNewTask(task);
-        //setIsEditing(true);
-        //setCurrentTaskId(task._id);
     };
 
     return (
@@ -87,11 +86,12 @@ const DailyPlanner = () => {
                                 <TableCell>{task.allottedTime}</TableCell>
                                 <TableCell>{task.priority}</TableCell>
                                 <TableCell>{task.status}</TableCell>
+
                                 <TableCell>
-                                    <Button variant="contained" color="info" onClick={() => startEditTask(task._id)}>
+                                    <Button variant="contained" color="info" onClick={() => editTask(task._id)} >
                                         Edit
                                     </Button>
-                                    <Button variant="contained" color="error" onClick={() => deleteTask(task._id)}>
+                                    <Button variant="contained" color="error" onClick={() => deleteTask(task._id)} >
                                         Delete
                                     </Button>
                                 </TableCell>
@@ -134,6 +134,7 @@ const DailyPlanner = () => {
                                     <select
                                         name="status"
                                         value={newTask.status}
+
                                         onChange={handleInputChange}
                                     >
                                         <option value="" disabled>
